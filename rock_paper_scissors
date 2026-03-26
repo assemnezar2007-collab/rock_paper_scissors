@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+using namespace std;
+string get_computer() {
+    string choices[] = { "rock","paper","scissors" };
+    int index = rand()%3;
+    return choices[index];
+}
+string mapchar(char c) {
+    c = tolower(c);
+    if (c == 'r') {
+        return "rock";
+    }
+    if (c == 'p') {
+        return "paper";
+    }
+    if (c == 's') {
+        return "scissors";
+    }
+    return "";
+}
+string det_who_win(string player, string computer) {
+    if (player == computer) {
+        return "draw";
+    }
+    if ((player == "rock" && computer == "scissors") || (player == "paper" && computer == "rock") || (player == "scissors" && computer == "paper")) {
+        return "player";
+    }
+    else {
+        return "computer";
+    }
+}
+string get_result(string winner, int& playerscore, int& computerscore) {
+    if (winner == "draw") {
+        return "it is draw";
+    }
+    else if (winner == "player") {
+        playerscore++;
+        return "you win";
+    }
+    else {
+        computerscore++;
+        return "you lose";
+    }
+}
+int main()
+{
+    char player_ch;
+    string playerchoice;  string computer_choice;
+    int playerscore = 0; int computerscore = 0;
+    cout << "welcome to r , p , s - Game" << endl;
+    cout << "enter 'r' for rock or 'p' for paper or 's' for scissors" << endl;
+    cout << "how many round would you like to play  ";
+    int n; cin >> n;
+    for (int i = 1; i <= n; i++) {
+        cout << "round - " << i << endl;
+        do {
+            cout << "choose rock or paper or scissors" << endl;
+            cin >> player_ch;
+            playerchoice = mapchar(player_ch);
+            if (playerchoice == "") {
+                cout << "invalid input please choose vaild option" << endl; 
+            }
+        } while (playerchoice=="");
+        computer_choice = get_computer();
+        cout << "computer choose " << computer_choice << endl; 
+        string winner = det_who_win(playerchoice, computer_choice);
+        string result = get_result(winner, playerscore, computerscore);
+        cout << result << endl; 
+        cout << " player score " << playerscore << " computer score " << computerscore << endl;
+    }
+     
+    return 0; 
+
+}
